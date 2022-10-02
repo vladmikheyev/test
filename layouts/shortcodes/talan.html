@@ -1,0 +1,743 @@
+<style>
+  .heading {
+    font-family: "Aboreto", serif;
+    font-size: 10vw;
+  }
+
+  .subheading {
+    font-family: "Aboreto", sans-serif;
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  @media screen and (min-width: 40em) {
+    body {
+      width: 50%;
+    }
+
+    .heading {
+      font-size: 6vw;
+    }
+
+    .subheading {
+      font-size: 1.75vw;
+    }
+  }
+
+  /*================================================
+  Start Important Part
+  ==================================================*/
+  .underline--magical {
+    background-image: linear-gradient(20deg, #008cba 0%, #008cba 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0.1em;
+    background-position: 0 88%;
+    transition: background-size 0.25s ease-in;
+  }
+
+  .underline--magical:hover {
+    background-size: 100% 88%;
+  }
+
+  /*================================================
+  End Important Part
+  ==================================================*/
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-image: url(/img/papa/obsh.png);
+    font-family: "Aboreto", Helvetica, Arial, sans-serif;
+  }
+
+  .cont {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    padding: 80px 70px;
+  }
+
+  .cont__inner {
+    position: relative;
+    height: 100%;
+  }
+
+  .cont__inner:hover .el__bg:after {
+    opacity: 1;
+  }
+
+  .el {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 19.2%;
+    height: 100%;
+    background: #252525;
+    transition: transform 0.6s 0.7s, width 0.7s, opacity 0.6s 0.7s, z-index 0s 1.3s;
+    will-change: transform, width, opacity;
+  }
+
+  .el:not(.s--active) {
+    cursor: pointer;
+  }
+
+  .el__overflow {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+  }
+
+  .el__inner {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    transition: transform 1s;
+  }
+
+  .cont.s--inactive .el__inner {
+    transform: translate3d(0, 100%, 0);
+  }
+
+  .el__bg {
+    position: relative;
+    width: calc(100vw - 140px);
+    height: 100%;
+    transition: transform 0.6s 0.7s;
+    will-change: transform;
+  }
+
+  .el__bg:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -5%;
+    width: 100%;
+    height: 110%;
+    background-size: cover;
+    background-position: center center;
+    transition: transform 1s;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .cont.s--inactive .el__bg:before {
+    transform: translate3d(0, -100%, 0) scale(1.2);
+  }
+
+  .el.s--active .el__bg:before {
+    transition: transform 0.8s;
+  }
+
+  .el__bg:after {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .cont.s--el-active .el__bg:after {
+    transition: opacity 0.5s 1.4s;
+    opacity: 1 !important;
+  }
+
+  .el__preview-cont {
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s 1.2s;
+  }
+
+  .cont.s--inactive .el__preview-cont {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .cont.s--el-active .el__preview-cont {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.5s;
+  }
+
+  .el__heading {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+
+  .el__content {
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.1s;
+  }
+
+  .el.s--active .el__content {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.5s 1.4s;
+  }
+
+  .el__text {
+    text-transform: uppercase;
+    font-size: 40px;
+    color: #fff;
+  }
+
+  .el__close-btn {
+    z-index: -1;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0s 0.45s;
+    cursor: pointer;
+  }
+
+  .el.s--active .el__close-btn {
+    z-index: 5;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0s 1.4s;
+  }
+
+  .el__close-btn:before,
+  .el__close-btn:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 8px;
+    margin-top: -4px;
+    background: #fff;
+    opacity: 0;
+    transition: opacity 0s;
+  }
+
+  .el.s--active .el__close-btn:before,
+  .el.s--active .el__close-btn:after {
+    opacity: 1;
+  }
+
+  .el__close-btn:before {
+    transform: rotate(45deg) translateX(100%);
+  }
+
+  .el.s--active .el__close-btn:before {
+    transition: all 0.3s 1.4s cubic-bezier(0.72, 0.09, 0.32, 1.57);
+    transform: rotate(45deg) translateX(0);
+  }
+
+  .el__close-btn:after {
+    transform: rotate(-45deg) translateX(100%);
+  }
+
+  .el.s--active .el__close-btn:after {
+    transition: all 0.3s 1.55s cubic-bezier(0.72, 0.09, 0.32, 1.57);
+    transform: rotate(-45deg) translateX(0);
+  }
+
+  .el__index {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: -80px;
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    text-align: center;
+    font-size: 20vw;
+    line-height: 0.85;
+    font-weight: bold;
+    transition: transform 0.5s, opacity 0.3s 1.4s;
+    transform: translate3d(0, 1vw, 0);
+  }
+
+  .el:hover .el__index {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .cont.s--el-active .el__index {
+    transition: transform 0.5s, opacity 0.3s;
+    opacity: 0;
+  }
+
+  .el__index-back,
+  .el__index-front {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .el__index-back {
+    color: #2f3840;
+    opacity: 0;
+    transition: opacity 0.25s 0.25s;
+  }
+
+  .el:hover .el__index-back {
+    transition: opacity 0.25s;
+    opacity: 1;
+  }
+
+  .el__index-overlay {
+    overflow: hidden;
+    position: relative;
+    transform: translate3d(0, 100%, 0);
+    transition: transform 0.5s 0.1s;
+    color: transparent;
+  }
+
+  .el__index-overlay:before {
+    content: attr(data-index);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.5s 0.1s;
+  }
+
+  .el:hover .el__index-overlay {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .el:hover .el__index-overlay:before {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .el:nth-child(1) {
+    transform: translate3d(0%, 0, 0);
+    transform-origin: 50% 50%;
+  }
+
+  .cont.s--el-active .el:nth-child(1):not(.s--active) {
+    transform: scale(0.5) translate3d(0%, 0, 0);
+    opacity: 0;
+    transition: transform 0.95s, opacity 0.95s;
+  }
+
+  .el:nth-child(1) .el__inner {
+    transition-delay: 0s;
+  }
+
+  .el:nth-child(1) .el__bg {
+    transform: translate3d(0%, 0, 0);
+  }
+
+  .el:nth-child(1) .el__bg:before {
+    transition-delay: 0s;
+    background-image: url("/img/papa/stadium.jpg");
+  }
+
+  .el:nth-child(2) {
+    transform: translate3d(105.2083333333%, 0, 0);
+    transform-origin: 155.2083333333% 50%;
+  }
+
+  .cont.s--el-active .el:nth-child(2):not(.s--active) {
+    transform: scale(0.5) translate3d(105.2083333333%, 0, 0);
+    opacity: 0;
+    transition: transform 0.95s, opacity 0.95s;
+  }
+
+  .el:nth-child(2) .el__inner {
+    transition-delay: 0.1s;
+  }
+
+  .el:nth-child(2) .el__bg {
+    transform: translate3d(-19.2%, 0, 0);
+
+  }
+
+  .el:nth-child(2) .el__bg:before {
+    transition-delay: 0.1s;
+    background-image: url("/img/papa/data-research-image-1.jpg");
+  }
+
+  .el:nth-child(3) {
+    transform: translate3d(210.4166666667%, 0, 0);
+    transform-origin: 260.4166666667% 50%;
+  }
+
+  .cont.s--el-active .el:nth-child(3):not(.s--active) {
+    transform: scale(0.5) translate3d(210.4166666667%, 0, 0);
+    opacity: 0;
+    transition: transform 0.95s, opacity 0.95s;
+  }
+
+  .el:nth-child(3) .el__inner {
+    transition-delay: 0.2s;
+  }
+
+  .el:nth-child(3) .el__bg {
+    transform: translate3d(-38.4%, 0, 0);
+  }
+
+  .el:nth-child(3) .el__bg:before {
+    transition-delay: 0.2s;
+    background-image: url("/img/papa/sec2222.jpg");
+  }
+
+  .el:nth-child(4) {
+    transform: translate3d(315.625%, 0, 0);
+    transform-origin: 365.625% 50%;
+  }
+
+  .cont.s--el-active .el:nth-child(4):not(.s--active) {
+    transform: scale(0.5) translate3d(315.625%, 0, 0);
+    opacity: 0;
+    transition: transform 0.95s, opacity 0.95s;
+  }
+
+  .el:nth-child(4) .el__inner {
+    transition-delay: 0.3s;
+  }
+
+  .el:nth-child(4) .el__bg {
+    transform: translate3d(-57.6%, 0, 0);
+  }
+
+  .el:nth-child(4) .el__bg:before {
+    transition-delay: 0.3s;
+    background-image: url("/img/papa/sector11.jpg");
+  }
+
+  .el:nth-child(5) {
+    transform: translate3d(420.8333333333%, 0, 0);
+    transform-origin: 470.8333333333% 50%;
+  }
+
+  .cont.s--el-active .el:nth-child(5):not(.s--active) {
+    transform: scale(0.5) translate3d(420.8333333333%, 0, 0);
+    opacity: 0;
+    transition: transform 0.95s, opacity 0.95s;
+  }
+
+  .el:nth-child(5) .el__inner {
+    transition-delay: 0.4s;
+  }
+
+  .el:nth-child(5) .el__bg {
+    transform: translate3d(-76.8%, 0, 0);
+  }
+
+  .el:nth-child(5) .el__bg:before {
+    transition-delay: 0.4s;
+    background-image: url("/img/papa/IMG_20190526_191514.jpg");
+  }
+
+  .el:hover .el__bg:after {
+    opacity: 0;
+  }
+
+  .el.s--active {
+    z-index: 1;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.6s, width 0.7s 0.7s, z-index 0s;
+  }
+
+  .el.s--active .el__bg {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.6s;
+  }
+
+  .el.s--active .el__bg:before {
+    transition-delay: 0.6s;
+    transform: scale(1.1);
+  }
+
+  .icon-link {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    width: 32px;
+  }
+
+  .icon-link img {
+    width: 100%;
+    vertical-align: top;
+  }
+
+  .icon-link--twitter {
+    left: auto;
+    right: 5px;
+  }
+</style>
+
+<div class="cont s--inactive">
+  <!-- cont inner start -->
+  <div class="cont__inner">
+    <!-- el start -->
+    <div class="el">
+      <div class="el__overflow">
+        <div class="el__inner">
+          <div class="el__bg"></div>
+          <div class="el__preview-cont">
+            <h2 class="el__heading">РАБОТА</h2>
+          </div>
+          <div class="el__content">
+            <div class="el__text" style="font-size: 20px;">
+              <ul>
+                <li>
+                  <span style="color: #008cba;">09.01.2020 - по настоящее время</span><br> <a href="https://volgogradarena.com" style="color: white; " target="_blank;">
+                    <span class="underline--magical">--- ГАУ ВО "ДИРЕКЦИЯ ПО ЭКСПЛУАТАЦИИ СТАДИОНА "ВОЛГОГРАД АРЕНА"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">01.12.2017 - 31.12.2019</span><br> <a href="http://sportin.su" style="color: white; " target="_blank;">
+                    <span class="underline--magical">--- ФГУП "СПОРТ-ИНЖИНИРИНГ"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">26.06.2017 - 01.01.2018</span><br> <a href="http://taskt.ru" style="color: white; " target="_blank;">
+                    <span class="underline--magical">--- ООО "ТАСК-Т"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">08.06.2016 - 01.01.2017</span><br> <a href="https://www.rusprofile.ru/id/5422481" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ООО "ТЕХНОПАРК"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">02.11.2015 - 01.01.2017</span><br> <a href="https://www.rusprofile.ru/id/7379576" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ООО "ЮЖНЫЙ ЦЕНТР СТРОИТЕЛЬНЫХ ТЕХНОЛОГИЙ"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">01.01.2015 - 05.10.2015</span><br> <a href="https://www.rusprofile.ru/id/4833855" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ООО "АГРОСТРОЙВОЛГОГРАД"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">01.07.2015 - 05.10.2015</span><br> <a href="https://www.agroinvest.com" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ФИЛИАЛ ЗАО "АГРОИНВЕСТ"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">02.03.2015 - 31.08.2015</span><br> <a href="https://vmk-shop.ru" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ООО "ЦАРЬ-ПРОДУКТ ЭЛИТА"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">10.09.2015 - 05.10.2015</span><br> <a href="https://vmk-shop.ru" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ФИЛИАЛ ООО "ЦАРЬ ПРОДУКТ ВЫГОДА"</span></a>
+                </li><br>
+                <li>
+                  <span style="color: #008cba;">13.02.2013 - 09.09.2015</span><br> <a href="https://vmk-shop.ru" style="color: white;" target="_blank;">
+                    <span class="underline--magical">--- ООО "ЦАРЬ-ПРОДУКТ"</span></a>
+                </li><br>
+
+
+
+
+
+
+              </ul>
+            </div>
+            <div class="el__close-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="el__index">
+        <div class="el__index-back">1</div>
+        <div class="el__index-front">
+          <div class="el__index-overlay" data-index="1">1</div>
+        </div>
+      </div>
+    </div>
+    <!-- el end -->
+    <!-- el start -->
+    <div class="el">
+      <div class="el__overflow">
+        <div class="el__inner">
+          <div class="el__bg"></div>
+          <div class="el__preview-cont">
+            <h2 class="el__heading">НАВЫКИ</h2>
+          </div>
+          <div class="el__content">
+            <div class="el__text">Whatever</div>
+            <div class="el__close-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="el__index">
+        <div class="el__index-back">2</div>
+        <div class="el__index-front">
+          <div class="el__index-overlay" data-index="2">2</div>
+        </div>
+      </div>
+    </div>
+    <!-- el end -->
+    <!-- el start -->
+    <div class="el">
+      <div class="el__overflow">
+        <div class="el__inner">
+          <div class="el__bg"></div>
+          <div class="el__preview-cont">
+            <h2 class="el__heading" style="color: #1B5583;">ОПЫТ</h2>
+          </div>
+          <div class="el__content">
+            <div class="el__text">Whatever</div>
+            <div class="el__close-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="el__index">
+        <div class="el__index-back">3</div>
+        <div class="el__index-front">
+          <div class="el__index-overlay" data-index="3">3</div>
+        </div>
+      </div>
+    </div>
+    <!-- el end -->
+    <!-- el start -->
+    <div class="el">
+      <div class="el__overflow">
+        <div class="el__inner">
+          <div class="el__bg"></div>
+          <div class="el__preview-cont">
+            <h2 class="el__heading">ПОРТ-<br>ФОЛИО</h2>
+          </div>
+          <div class="el__content">
+            <div class="el__text">Whatever</div>
+            <div class="el__close-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="el__index">
+        <div class="el__index-back">4</div>
+        <div class="el__index-front">
+          <div class="el__index-overlay" data-index="4">4</div>
+        </div>
+      </div>
+    </div>
+    <!-- el end -->
+    <!-- el start -->
+    <div class="el">
+      <div class="el__overflow">
+        <div class="el__inner">
+          <div class="el__bg"></div>
+          <div class="el__preview-cont">
+            <h2 class="el__heading">СЕМЬЯ</h2>
+          </div>
+          <div class="el__content">
+            <div class="el__text">Whatever</div>
+            <div class="el__close-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="el__index">
+        <div class="el__index-back">5</div>
+        <div class="el__index-front">
+          <div class="el__index-overlay" data-index="5">5</div>
+        </div>
+      </div>
+    </div>
+    <!-- el end -->
+  </div>
+  <!-- cont inner end -->
+</div>
+
+
+<a href="https://github.com/vladmikheyev/" target="_blank" class="icon-link icon-link--github">
+  <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/github-128.png">
+</a>
+
+<script>
+  var $cont = document.querySelector('.cont');
+  var $elsArr = [].slice.call(document.querySelectorAll('.el'));
+  var $closeBtnsArr = [].slice.call(document.querySelectorAll('.el__close-btn'));
+
+  setTimeout(function() {
+    $cont.classList.remove('s--inactive');
+  }, 200);
+
+  $elsArr.forEach(function($el) {
+    $el.addEventListener('click', function() {
+      if (this.classList.contains('s--active')) return;
+      $cont.classList.add('s--el-active');
+      this.classList.add('s--active');
+    });
+  });
+
+  $closeBtnsArr.forEach(function($btn) {
+    $btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      $cont.classList.remove('s--el-active');
+      document.querySelector('.el.s--active').classList.remove('s--active');
+    });
+  });
+
+  // VARIABLES
+  const magicalUnderlines = Array.from(document.querySelectorAll('.underline--magical'));
+
+  const gradientAPI = 'https://gist.githubusercontent.com/wking-io/3e116c0e5675c8bcad8b5a6dc6ca5344/raw/4e783ce3ad0bcd98811c6531e40256b8feeb8fc8/gradient.json';
+
+  // HELPER FUNCTIONS
+
+  // 1. Get random number in range. Used to get random index from array.
+  const randNumInRange = max => Math.floor(Math.random() * (max - 1));
+
+  // 2. Merge two separate array values at the same index to
+  // be the same value in new array.
+  const mergeArrays = (arrOne, arrTwo) => arrOne
+    .map((item, i) => `${item} ${arrTwo[i]}`)
+    .join(', ');
+
+  // 3. Curried function to add a background to array of elms
+  const addBackground = (elms) => (color) => {
+    elms.forEach(el => {
+      el.style.backgroundImage = color;
+    });
+  }
+  // 4. Function to get data from API
+  const getData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.data;
+  }
+
+  // 5. Partial Application of addBackground to always apply
+  // background to the magicalUnderlines constant
+  const addBackgroundToUnderlines = addBackground(magicalUnderlines);
+
+  // GRADIENT FUNCTIONS
+
+  // 1. Build CSS formatted linear-gradient from API data
+  const buildGradient = (obj) => `linear-gradient(${obj.direction}, ${mergeArrays(obj.colors, obj.positions)})`;
+
+  // 2. Get single gradient from data pulled in array and
+  // apply single gradient to a callback function
+  const applyGradient = async (url, callback) => {
+    const data = await getData(url);
+    const gradient = buildGradient(data[randNumInRange(data.length)]);
+    callback(gradient);
+  }
+
+  // RESULT
+  applyGradient(gradientAPI, addBackgroundToUnderlines);
+</script>
