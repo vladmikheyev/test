@@ -2,7 +2,7 @@ body {
   margin-left: auto;
 }
 
-.conteiner2 {
+.container2 {
   max-width: 100%;
   padding-top: 50px;
   padding-left: 300px;
@@ -10,11 +10,11 @@ body {
   background-image: url(/img/elis-08.jpg);
 }
 
-.conteiner {
+.container {
   padding: 50px;
 }
 
 h1 {
   text-align: center;
-  color: #028cba
+  color: #008cba
 }
